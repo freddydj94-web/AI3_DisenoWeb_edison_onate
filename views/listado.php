@@ -19,10 +19,13 @@ try {
         table { width: 100%; border-collapse: collapse; }
         th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
         th { background: #0057b7; color: white; }
+        .btn-editar { color: #0057b7; text-decoration: none; margin-right: 10px; font-weight: bold; }
+        .btn-eliminar { color: #d9534f; text-decoration: none; font-weight: bold; }
     </style>
 </head>
 <body>
 <h2>Estudiantes Registrados</h2>
+
 <?php if (isset($_GET['ok'])): ?>
     <p style="color:green; font-weight: bold;">
         <?php 
@@ -32,17 +35,22 @@ try {
         ?>
     </p>
 <?php endif; ?>
+
 <table>
     <thead>
         <tr>
-            <th>ID</th><th>Cédula</th><th>Nombres</th>
-            <th>Apellidos</th><th>Correo</th><th>Carrera</th><th>Nacimiento</th>
+            <th>ID</th>
+            <th>Cédula</th>
+            <th>Nombres</th>
+            <th>Apellidos</th>
+            <th>Correo</th>
+            <th>Carrera</th>
+            <th>Nacimiento</th>
+            <th>Acciones</th> <!-- COLUMNA NUEVA -->
         </tr>
-        <th>Acciones</th>
     </thead>
     <tbody>
     <?php foreach ($registros as $r): ?>
-
         <tr>
             <td><?= htmlspecialchars($r['id'], ENT_QUOTES, 'UTF-8') ?></td>
             <td><?= htmlspecialchars($r['cedula'], ENT_QUOTES, 'UTF-8') ?></td>
@@ -51,15 +59,16 @@ try {
             <td><?= htmlspecialchars($r['correo'], ENT_QUOTES, 'UTF-8') ?></td>
             <td><?= htmlspecialchars($r['carrera'], ENT_QUOTES, 'UTF-8') ?></td>
             <td><?= htmlspecialchars($r['fecha_nacimiento'], ENT_QUOTES, 'UTF-8') ?></td>
+            <td>
+                <!-- BOTONES NUEVOS -->
+                <a href="editar.php?id=<?= $r['id'] ?>" class="btn-editar">✏️ Editar</a>
+                <a href="../includes/eliminar.php?id=<?= $r['id'] ?>" class="btn-eliminar" onclick="return confirm('¿Estás seguro de que deseas eliminar este estudiante?');">🗑️ Eliminar</a>
+            </td>
         </tr>
-        <td>
-    <a href="editar.php?id=<?= htmlspecialchars($r['id'], ENT_QUOTES, 'UTF-8') ?>" style="color: blue; text-decoration: none; margin-right: 10px;">✏️ Editar</a>
-    <a href="../includes/eliminar.php?id=<?= htmlspecialchars($r['id'], ENT_QUOTES, 'UTF-8') ?>" style="color: red; text-decoration: none;" onclick="return confirm('¿Estás seguro de que deseas eliminar este estudiante?');">🗑️ Eliminar</a>
-</td>
     <?php endforeach; ?>
     </tbody>
 </table>
 <br>
-<a href="formulario.php">← Volver al formulario</a>
+<a href="formulario.php" style="text-decoration:none; color:#333;">← Volver al formulario</a>
 </body>
 </html>
