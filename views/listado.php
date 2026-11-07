@@ -24,6 +24,7 @@ try {
     </style>
 </head>
 <body>
+<h1 style="color: red;">¡PRUEBA DE ACTUALIZACIÓN!</h1>
 <h2>Estudiantes Registrados</h2>
 
 <?php if (isset($_GET['ok'])): ?>
