@@ -24,7 +24,13 @@ try {
 <body>
 <h2>Estudiantes Registrados</h2>
 <?php if (isset($_GET['ok'])): ?>
-    <p style="color:green">✅ Registro insertado correctamente.</p>
+    <p style="color:green; font-weight: bold;">
+        <?php 
+            if ($_GET['ok'] == '1') echo "✅ Registro insertado correctamente.";
+            if ($_GET['ok'] == 'update') echo "✅ Registro actualizado correctamente.";
+            if ($_GET['ok'] == 'delete') echo "🗑️ Registro eliminado correctamente.";
+        ?>
+    </p>
 <?php endif; ?>
 <table>
     <thead>
@@ -32,9 +38,11 @@ try {
             <th>ID</th><th>Cédula</th><th>Nombres</th>
             <th>Apellidos</th><th>Correo</th><th>Carrera</th><th>Nacimiento</th>
         </tr>
+        <th>Acciones</th>
     </thead>
     <tbody>
     <?php foreach ($registros as $r): ?>
+
         <tr>
             <td><?= htmlspecialchars($r['id'], ENT_QUOTES, 'UTF-8') ?></td>
             <td><?= htmlspecialchars($r['cedula'], ENT_QUOTES, 'UTF-8') ?></td>
@@ -44,6 +52,10 @@ try {
             <td><?= htmlspecialchars($r['carrera'], ENT_QUOTES, 'UTF-8') ?></td>
             <td><?= htmlspecialchars($r['fecha_nacimiento'], ENT_QUOTES, 'UTF-8') ?></td>
         </tr>
+        <td>
+    <a href="editar.php?id=<?= htmlspecialchars($r['id'], ENT_QUOTES, 'UTF-8') ?>" style="color: blue; text-decoration: none; margin-right: 10px;">✏️ Editar</a>
+    <a href="../includes/eliminar.php?id=<?= htmlspecialchars($r['id'], ENT_QUOTES, 'UTF-8') ?>" style="color: red; text-decoration: none;" onclick="return confirm('¿Estás seguro de que deseas eliminar este estudiante?');">🗑️ Eliminar</a>
+</td>
     <?php endforeach; ?>
     </tbody>
 </table>
